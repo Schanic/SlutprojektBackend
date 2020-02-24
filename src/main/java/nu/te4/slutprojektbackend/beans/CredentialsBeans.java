@@ -6,6 +6,7 @@
 package nu.te4.slutprojektbackend.beans;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.mysql.jdbc.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Base64;

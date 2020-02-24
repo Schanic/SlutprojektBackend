@@ -5,14 +5,16 @@
  */
 package nu.te4.slutprojektbackend;
 
+import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
  * @author fredr
  */
 public class ConnectionFactory {
-    public static Connection getConnection(){
+    public static Connection getConnection() throws SQLException{
         String user ="";
         String password="";
         String url ="jdbc:mysql://localhost/slutprojekt";
