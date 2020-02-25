@@ -8,10 +8,11 @@ package nu.te4.slutprojektbackend.entities;
 import com.mysql.jdbc.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import nu.te4.slutprojektbackend.ConnectionFactory;
 
 /**
- *
+ * 
  * @author Johan
  */
 public class User {
@@ -23,17 +24,23 @@ public class User {
         this.id_number = id_number;
     }
 
-    User(int user_id) {
+    User(int user_id){ // LÄGG DETTA I USERBEAN ISTÄLLET
         //ställa frågan
+        this.id_number = user_id;
         try(Connection connection = ConnectionFactory.getConnection()){
-            PreparedStatement preparedstatement = connection.prepareStatement("SELECT users.id WHERE username=?");
-            preparedstatement.setString(1, name);
-
+            PreparedStatement preparedstatement = connection.prepareStatement("SELECT * WHERE id=?");
+            preparedstatement.setInt(1, user_id); // BORDE INTE MAN FRÅGA USERNAME INSTÄLLET FÖR ID????
+            this.name = "FRÅN DATABASEN";
+            ResultSet data = preparedstatement.executeQuery();
+            if(data.next()){
+                int userId = data.getInt("id");
+                id_number = userId;
+            }
+            
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
-
-     
 
     public String getName() {
         return name;

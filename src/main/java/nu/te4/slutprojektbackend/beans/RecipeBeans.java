@@ -22,7 +22,7 @@ public class RecipeBeans {
             PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe VALUES (NULL,?,?,?)");
             preparedstatement.setString(1, recipe.getName());
             preparedstatement.setString(2, recipe.getRecipe_descrip());
-            // Kanske måste skicka med User_id(Borde vara så)
+            preparedstatement.setInt(3, recipe.getUser_id());
            return preparedstatement.executeUpdate(); 
         } catch (Exception e) {
            System.out.println("Error from Credentialsbean: " + e.getMessage());
