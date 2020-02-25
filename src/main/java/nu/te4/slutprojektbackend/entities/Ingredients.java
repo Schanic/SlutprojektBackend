@@ -10,5 +10,9 @@ package nu.te4.slutprojektbackend.entities;
  * @author Johan
  */
 public class Ingredients {
-    
+    String name;
+    String unit;
+    int amount;
+    int ingredient_id;
+    int recipe_id;
 }

@@ -24,7 +24,7 @@ public class User {
         this.id_number = id_number;
     }
 
-    User(int user_id){ // LÄGG DETTA I USERBEAN ISTÄLLET
+    User(int user_id){ 
         //ställa frågan
         this.id_number = user_id;
         try(Connection connection = ConnectionFactory.getConnection()){
