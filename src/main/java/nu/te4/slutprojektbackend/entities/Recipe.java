@@ -5,6 +5,9 @@
  */
 package nu.te4.slutprojektbackend.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Johan
@@ -14,6 +17,10 @@ public class Recipe {
     private String name;
     private String recipe_descrip;
     private int user_id;
+    private List<Tags> tags = new  ArrayList<>();
+    private List<Ingredients> ingredients = new  ArrayList<>();
+    // Gör lista för taggar osv. Så få en böna ta taggarna och gör en koppling.
+    
 
     public Recipe() {
     }
@@ -67,6 +74,22 @@ public class Recipe {
 
     public void setRecipe_descrip(String recipe_descrip) {
         this.recipe_descrip = recipe_descrip;
+    }
+
+    public List<Tags> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
+    }
+
+    public List<Ingredients> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredients> ingredients) {
+        this.ingredients = ingredients;
     }
 
 
