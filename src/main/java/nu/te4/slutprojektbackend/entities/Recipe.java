@@ -17,15 +17,15 @@ public class Recipe {
     private String name;
     private String recipe_descrip;
     private int user_id;
-    private List<Tags> tags = new  ArrayList<>();
+    private List<Tag> tags = new  ArrayList<>();
     private List<Ingredients> ingredients = new  ArrayList<>();
+    private List<Instruction> instructions = new ArrayList<>();
     // Gör lista för taggar osv. Så få en böna ta taggarna och gör en koppling.
     
 
     public Recipe() {
     }
 
-    
     public Recipe(String name, String recipe_descrip, int user_id) {
         this.name = name;
         this.recipe_descrip = recipe_descrip;
@@ -36,6 +36,13 @@ public class Recipe {
         this.id = id;
         this.name = name;
         this.recipe_descrip = recipe_descrip;
+        this.user_id = user_id;
+    }
+
+    public Recipe(int id, String title, String author) {
+        this.id = id;
+        this.name = title;
+        String author = 
         this.user_id = user_id;
     }
 
@@ -76,11 +83,11 @@ public class Recipe {
         this.recipe_descrip = recipe_descrip;
     }
 
-    public List<Tags> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tags> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
@@ -90,6 +97,14 @@ public class Recipe {
 
     public void setIngredients(List<Ingredients> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public List<Instruction> getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(List<Instruction> instructions) {
+        this.instructions = instructions;
     }
 
 

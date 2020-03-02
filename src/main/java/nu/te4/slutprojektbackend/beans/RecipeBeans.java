@@ -23,41 +23,51 @@ import nu.te4.slutprojektbackend.entities.Recipe;
 public class RecipeBeans {
     
     @Inject
-    IngredientsBean ingredientsBean;
+    SaveRecipeBean ingredientsBean;
     
-    public int saveRecipe(Recipe recipe){
+    
         
-        try (Connection connection = ConnectionFactory.getConnection()){
-            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe VALUES (NULL,?,?,?)");
-            preparedstatement.setString(1, recipe.getName());
-            preparedstatement.setString(2, recipe.getRecipe_descrip());
-            preparedstatement.setInt(3, recipe.getUser_id());
-            ingredientsBean.saveI(recipe.getId(), recipe.getIngredients().get(0).getId() , recipe.getIngredients().get(0).getAmount(), recipe.getIngredients().get(0).getUnit());
-           return preparedstatement.executeUpdate(); 
-        } catch (Exception e) {
-           System.out.println("Error from Credentialsbean: " + e.getMessage());
-           return 0;
-        }
-        
+     //SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id
       
-    }
-    public int getRecipe(){
-        List<Recipe> recipe = new ArrayList<>();
+    
+    public List<Recipe> getAllRecipes(){
+        List<Recipe> recipes = new ArrayList<>();
         try (Connection connection = ConnectionFactory.getConnection()){
-            PreparedStatement preparedstatement = connection.prepareStatement("Select * recipe");
-           
-            ResultSet result = preparedstatement.executeQuery();
-            while (data.next){
-                int
+            PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id");
+            
+            ResultSet data = preparedstatement.executeQuery();
+            while (data.next()){
+                int id = data.getInt("id");
+                String title = data.getString("name");
+                String author = data.getString("username");
+                
+                Recipe recipe = new Recipe(id, title, author);
             }
         } catch (Exception e) {
            System.out.println("Error from Credentialsbean: " + e.getMessage());
-           return 0;
+           
         }
-        
+        return recipes;
       
     }
     
-    
-    
+    public int getWholeRecipe(){
+        
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe VALUES (?,?,?,?)");
+            preparedstatement.setInt(1, recipe.getId());
+            preparedstatement.setInt(2, recipe.getUser_id());
+            preparedstatement.setString(1, recipe.getName());
+            preparedstatement.setString(1, recipe.getRecipe_descrip());
+            preparedstatement.executeQuery();
+            return 1;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return 0;
+        }
+    }
 }
+    
+    
+    
+

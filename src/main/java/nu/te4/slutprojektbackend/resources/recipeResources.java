@@ -15,7 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import nu.te4.slutprojektbackend.beans.IngredientsBean;
+import nu.te4.slutprojektbackend.beans.SaveRecipeBean;
 import nu.te4.slutprojektbackend.beans.RecipeBeans;
 import nu.te4.slutprojektbackend.beans.TagBean;
 import nu.te4.slutprojektbackend.entities.Recipe;
@@ -31,7 +31,7 @@ public class recipeResources {
     @EJB
     RecipeBeans recipeBeans;
     @EJB
-    IngredientsBean ingrediensbeans;
+    SaveRecipeBean ingrediensbeans;
     @EJB
     TagBean tagBean;
 
