@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import nu.te4.slutprojektbackend.ConnectionFactory;
+import nu.te4.slutprojektbackend.entities.IdTag;
 import nu.te4.slutprojektbackend.entities.Recipe;
 
 /**
@@ -40,8 +41,8 @@ public class RecipeBeans {
                 int id = data.getInt("id");
                 String title = data.getString("name");
                 String author = data.getString("username");
-                
                 Recipe recipe = new Recipe(id, title, author);
+                recipes.add(recipe);
             }
         } catch (Exception e) {
            System.out.println("Error from Credentialsbean: " + e.getMessage());
@@ -51,21 +52,34 @@ public class RecipeBeans {
       
     }
     
-    public int getWholeRecipe(){
-        
+    public Recipe getWholeRecipe(int id){
+        Recipe recipe = new Recipe();
+        List<IdTag> tags = new ArrayList<>();
         try (Connection connection = ConnectionFactory.getConnection()) {
-            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe VALUES (?,?,?,?)");
-            preparedstatement.setInt(1, recipe.getId());
-            preparedstatement.setInt(2, recipe.getUser_id());
-            preparedstatement.setString(1, recipe.getName());
-            preparedstatement.setString(1, recipe.getRecipe_descrip());
+            PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id");
+            preparedstatement.setInt(1, id);
             preparedstatement.executeQuery();
-            return 1;
+            
+            PreparedStatement preparedstatement2 = connection.prepareStatement("SELECT * FROM recipe_tags WHERE recipe_id = ?");
+            preparedstatement2.setInt(1, id);
+            ResultSet data = preparedstatement2.executeQuery();
+            while(data.next()){
+                int recipe_id = data.getInt("recipe_id");
+                int tag_id = data.getInt("tags_id");
+                IdTag tag = new IdTag(recipe_id, tag_id);
+                tags.add(tag);
+            }
+            
+            
+            
+            
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            return 0;
+            
         }
+        return recipe;
     }
+    public Recipe getWholeRecipe2()
 }
     
     

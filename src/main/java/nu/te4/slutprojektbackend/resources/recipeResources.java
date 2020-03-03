@@ -13,6 +13,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import nu.te4.slutprojektbackend.beans.SaveRecipeBean;
@@ -31,7 +32,7 @@ public class recipeResources {
     @EJB
     RecipeBeans recipeBeans;
     @EJB
-    SaveRecipeBean ingrediensbeans;
+    SaveRecipeBean saveRecipeBean;
     @EJB
     TagBean tagBean;
 
@@ -39,21 +40,27 @@ public class recipeResources {
     @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createData(Recipe recipe) {
-       recipeBeans.saveRecipe(recipe); 
-       ingrediensbeans.saveI(recipe.getIngredients());
+       saveRecipeBean.saveRecipe(recipe); 
+       saveRecipeBean.saveIngRec(recipe);
+       saveRecipeBean.saveInstructions(recipe);
+       saveRecipeBean.saveTags(recipe);
 
 
         return null;
     }
     
-    @GET
-    @Path("allTitleRecipes")
+    @POST
+    @Path("allRecipes")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getData(Recipe recipe) {
-       List<Recipe> data = recipeBeans.getRecipe();
-
-
-        return null;
+       List<Recipe> data = recipeBeans.getAllRecipes();
+       return Response.ok(data).build();
+    }
+    @GET
+    @Path("wholeRecipe")
+    public Response getRecipe(@QueryParam("id") int id) {
+        Recipe recipe = recipeBeans.getWholeRecipe(id);
+        return Response.ok(recipe).build();
     }
 
 }

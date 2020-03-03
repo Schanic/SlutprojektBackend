@@ -10,5 +10,5 @@ package nu.te4.slutprojektbackend.beans;
  * @author Johan
  */
 public class TagBean {
-    public 
+  
 }
