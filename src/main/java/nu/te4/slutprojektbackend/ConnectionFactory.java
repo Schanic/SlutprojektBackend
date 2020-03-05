@@ -14,11 +14,12 @@ import java.sql.SQLException;
  * @author fredr
  */
 public class ConnectionFactory {
-    public static Connection getConnection() throws SQLException{
-        String user ="";
+    public static Connection getConnection() throws SQLException, ClassNotFoundException{
+        String user ="root";
         String password="";
-        String url ="jdbc:mysql://localhost/slutprojekt";
-        return (Connection) DriverManager.getConnection(user,password,url);
+        String url ="jdbc:mysql://localhost/datalagring";
+        Class.forName("com.mysql.jdbc.Driver");
+        return (Connection) DriverManager.getConnection(url,user,password);
                 
     }
 }

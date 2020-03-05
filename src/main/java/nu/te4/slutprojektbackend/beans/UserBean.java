@@ -5,10 +5,13 @@
  */
 package nu.te4.slutprojektbackend.beans;
 
+import javax.ejb.Stateless;
+
 /**
  *
  * @author Johan
  */
+@Stateless
 public class UserBean {
     
 }

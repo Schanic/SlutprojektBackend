@@ -24,6 +24,7 @@ public class Recipe {
     
 
     public Recipe() {
+        
     }
 
     public Recipe(String name, String recipe_descrip, int user_id) {

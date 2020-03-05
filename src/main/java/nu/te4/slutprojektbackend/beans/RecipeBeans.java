@@ -13,7 +13,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import nu.te4.slutprojektbackend.ConnectionFactory;
-import nu.te4.slutprojektbackend.entities.IdTag;
 import nu.te4.slutprojektbackend.entities.Recipe;
 
 /**
@@ -22,22 +21,17 @@ import nu.te4.slutprojektbackend.entities.Recipe;
  */
 @Stateless
 public class RecipeBeans {
-    
+
     @Inject
     SaveRecipeBean ingredientsBean;
-    
-    
-        
-     //SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id
-      
-    
-    public List<Recipe> getAllRecipes(){
+
+    //SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id
+    public List<Recipe> getAllRecipes() {
         List<Recipe> recipes = new ArrayList<>();
-        try (Connection connection = ConnectionFactory.getConnection()){
+        try ( Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id");
-            
             ResultSet data = preparedstatement.executeQuery();
-            while (data.next()){
+            while (data.next()) {
                 int id = data.getInt("id");
                 String title = data.getString("name");
                 String author = data.getString("username");
@@ -45,43 +39,25 @@ public class RecipeBeans {
                 recipes.add(recipe);
             }
         } catch (Exception e) {
-           System.out.println("Error from Credentialsbean: " + e.getMessage());
-           
+            System.out.println("Error from Credentialsbean: " + e.getMessage());
+
         }
         return recipes;
-      
+
     }
     
-    public Recipe getWholeRecipe(int id){
+    public Recipe getRecipe(int id){
         Recipe recipe = new Recipe();
-        List<IdTag> tags = new ArrayList<>();
-        try (Connection connection = ConnectionFactory.getConnection()) {
-            PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id");
-            preparedstatement.setInt(1, id);
-            preparedstatement.executeQuery();
-            
-            PreparedStatement preparedstatement2 = connection.prepareStatement("SELECT * FROM recipe_tags WHERE recipe_id = ?");
-            preparedstatement2.setInt(1, id);
-            ResultSet data = preparedstatement2.executeQuery();
-            while(data.next()){
-                int recipe_id = data.getInt("recipe_id");
-                int tag_id = data.getInt("tags_id");
-                IdTag tag = new IdTag(recipe_id, tag_id);
-                tags.add(tag);
-            }
-            
-            
-            
-            
+        try (Connection connection = ConnectionFactory.getConnection()){
+             PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe, users WHERE recipe.user_id  = users.id AND recipe.id =?");
+             preparedstatement.setInt(1, id);
+             preparedstatement.executeQuery();
+             
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            
         }
         return recipe;
     }
-    public Recipe getWholeRecipe2()
-}
-    
-    
-    
 
+    
+}

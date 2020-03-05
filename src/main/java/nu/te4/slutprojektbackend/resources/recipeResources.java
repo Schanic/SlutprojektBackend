@@ -6,8 +6,6 @@
 package nu.te4.slutprojektbackend.resources;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,10 +14,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import nu.te4.slutprojektbackend.beans.SaveRecipeBean;
+import nu.te4.slutprojektbackend.beans.InstructionsBean;
 import nu.te4.slutprojektbackend.beans.RecipeBeans;
+import nu.te4.slutprojektbackend.beans.SaveRecipeBean;
 import nu.te4.slutprojektbackend.beans.TagBean;
+import nu.te4.slutprojektbackend.entities.Instruction;
 import nu.te4.slutprojektbackend.entities.Recipe;
+import nu.te4.slutprojektbackend.entities.Tag;
 
 /**
  *
@@ -35,32 +36,47 @@ public class recipeResources {
     SaveRecipeBean saveRecipeBean;
     @EJB
     TagBean tagBean;
+    @EJB
+    InstructionsBean instructBean;
 
     @POST
     @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createData(Recipe recipe) {
-       saveRecipeBean.saveRecipe(recipe); 
-       saveRecipeBean.saveIngRec(recipe);
-       saveRecipeBean.saveInstructions(recipe);
-       saveRecipeBean.saveTags(recipe);
-
+        saveRecipeBean.saveRecipe(recipe);
+        saveRecipeBean.saveIngRec(recipe);
+        saveRecipeBean.saveInstructions(recipe);
+        saveRecipeBean.saveTags(recipe);
 
         return null;
     }
-    
-    @POST
+
+    @GET
     @Path("allRecipes")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getData(Recipe recipe) {
-       List<Recipe> data = recipeBeans.getAllRecipes();
-       return Response.ok(data).build();
+    public Response getData() {
+        List<Recipe> data = recipeBeans.getAllRecipes();
+        return Response.ok(data).build();
     }
+
     @GET
     @Path("wholeRecipe")
     public Response getRecipe(@QueryParam("id") int id) {
-        Recipe recipe = recipeBeans.getWholeRecipe(id);
-        return Response.ok(recipe).build();
+
+        Recipe data = recipeBeans.getRecipe(id);
+        
+        List<Instruction> instruct = instructBean.getInstruction(id);
+        List<Tag> tag = tagBean.getRecipeTagsList();
+        
+        data.setId(id);
+        data.setInstructions(instruct);
+        data.setTags(tag);      
+        String name = data.getName();
+        data.setName(name);
+        //data.setUser_id(userId);
+        
+
+        return Response.ok(data).build();
     }
 
 }
