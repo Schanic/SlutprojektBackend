@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.ejb.Stateless;
 import nu.te4.slutprojektbackend.ConnectionFactory;
+//import nu.te4.slutprojektbackend.entities.Rec_Ing;
 import nu.te4.slutprojektbackend.entities.Recipe;
 
 /**
@@ -32,12 +33,10 @@ public class SaveRecipeBean {
         }
     }
 
-    public int saveIngRec(Recipe recipe) {
+    public int saveIng(Recipe recipe) {
         try ( Connection connection = ConnectionFactory.getConnection()) {
-            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients VALUES (NULL,?,?,?)");
-            preparedstatement.setInt(1, recipe.getIngredients().get(0).getIng_id());
-            preparedstatement.setInt(2, recipe.getIngredients().get(0).getAmount());
-            preparedstatement.setString(4, recipe.getIngredients().get(0).getUnit());
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients VALUES (NULL,?)");
+            preparedstatement.setString(1, recipe.getIngredient().get(0).getName());
             preparedstatement.executeUpdate();
             return 1;
 
@@ -47,8 +46,38 @@ public class SaveRecipeBean {
         }
 
     }
+    
+    public int saveIngRec(Recipe recipe) {
+        try ( Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients VALUES (?,?,?,?)");
+            preparedstatement.setInt(1, recipe.getId());
+            preparedstatement.setInt(2, recipe.getIngredient().get(0).getId());
+            preparedstatement.setString(3, recipe.getIngredient().get(0).getUnit());
+            preparedstatement.setString(4, recipe.getIngredient().get(0).getUnit());
+            preparedstatement.executeUpdate();
+            return 1;
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return 0;
+        }
+
+    }
+    
 
     public int saveTags(Recipe recipe) {
+        try ( Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO tags VALUES (NULL,?)");
+            //preparedstatement.setInt(1, recipe.getTags().get(0).getId());
+            preparedstatement.setString(1, recipe.getTags().get(0).getName());
+            preparedstatement.executeUpdate();
+            return 1;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return 0;
+        }
+    }
+    public int saveTagsRec(Recipe recipe) {
         try ( Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_tags VALUES (?,?)");
             preparedstatement.setInt(1, recipe.getId());

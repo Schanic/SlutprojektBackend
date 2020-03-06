@@ -9,11 +9,11 @@ package nu.te4.slutprojektbackend.entities;
  *
  * @author Johan
  */
-public class IdTag {
+public class Rec_tags {
     private int recipe_id;
     private int tag_id;
 
-    public IdTag(int recipe_id, int tag_id) {
+    public Rec_tags(int recipe_id, int tag_id) {
         this.recipe_id = recipe_id;
         this.tag_id = tag_id;
     }

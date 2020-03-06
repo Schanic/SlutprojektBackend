@@ -9,13 +9,13 @@ package nu.te4.slutprojektbackend.entities;
  *
  * @author Johan
  */
-public class Ingredients {
+public class Rec_Ing_OLD {
     private int rec_id;
     private int ing_id;
     private int amount;
     private String unit;
 
-    public Ingredients(int rec_id, int ing_id, int amount, String unit) {
+    public Rec_Ing_OLD(int rec_id, int ing_id, int amount, String unit) {
         this.rec_id = rec_id;
         this.ing_id = ing_id;
         this.amount = amount;

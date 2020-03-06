@@ -25,7 +25,6 @@ public class RecipeBeans {
     @Inject
     SaveRecipeBean ingredientsBean;
 
-    //SELECT recipe.*, users.username FROM recipe LEFT JOIN users ON recipe.user_id = users.id
     public List<Recipe> getAllRecipes() {
         List<Recipe> recipes = new ArrayList<>();
         try ( Connection connection = ConnectionFactory.getConnection()) {
@@ -45,19 +44,27 @@ public class RecipeBeans {
         return recipes;
 
     }
-    
-    public Recipe getRecipe(int id){
+
+    public Recipe getRecipe(int id) {
         Recipe recipe = new Recipe();
-        try (Connection connection = ConnectionFactory.getConnection()){
-             PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe, users WHERE recipe.user_id  = users.id AND recipe.id =?");
-             preparedstatement.setInt(1, id);
-             preparedstatement.executeQuery();
-             
+        try ( Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedstatement = connection.prepareStatement("SELECT recipe.*, users.username FROM recipe, users WHERE recipe.user_id  = users.id AND recipe.id =?");
+            preparedstatement.setInt(1, id);
+            ResultSet data = preparedstatement.executeQuery();
+            while (data.next()) {
+                int recipe_id = data.getInt("id");
+                int user_id = data.getInt("user_id");
+                String description = data.getString("recipe_descrip");
+                String title = data.getString("name");
+                String username = data.getString("username");
+                recipe = new Recipe(recipe_id, user_id,title , description, username);
+                
+            }
+
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         return recipe;
     }
 
-    
 }

@@ -28,6 +28,7 @@ public class InstructionsBean {
             preparedstatement.setInt(1, id);
             preparedstatement.executeQuery();
             ResultSet data = preparedstatement.executeQuery();
+            
             while (data.next()) {
                 String description = data.getString("description");
                 int instruction_id = data.getInt("id");
@@ -36,11 +37,12 @@ public class InstructionsBean {
                 Instruction instruct = new Instruction(description, instruction_id ,recipe_id ,stepNumber );
                 instruction.add(instruct);
             }
-
+            
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
 
         }
+        System.out.println(instruction);
         return instruction;
     }
 
