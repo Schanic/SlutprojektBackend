@@ -50,12 +50,13 @@ public class recipeResources {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createData(Recipe recipe) {
         int result = saveRecipeBean.saveRecipe(recipe);
+        
         int result1 =saveRecipeBean.saveIngRec(recipe);
         //int result =saveRecipeBean.saveInstructions(recipe);
         //int result4 =saveRecipeBean.saveIng(recipe);
         //int result5 =saveRecipeBean.saveTagsRec(recipe);
         System.out.println(recipe);
-        if (result2 == 2) {
+        if (result == 2) {
             return Response.status(Response.Status.CREATED).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
