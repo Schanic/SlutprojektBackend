@@ -14,17 +14,16 @@ public class Ingredient {
     private String name;
     private int amount;
     private String unit;
-    
 
+    public Ingredient() {
+    }
+        
     public Ingredient(int id, String name, int amount, String unit) {
         this.id = id;
         this.name = name;
         this.amount = amount;
         this.unit = unit;
     }
-    
-    
-
     public String getName() {
         return name;
     }

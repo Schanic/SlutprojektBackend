@@ -21,27 +21,29 @@ public class SaveRecipeBean {
 
     public int saveRecipe(Recipe recipe) {
         try ( Connection connection = ConnectionFactory.getConnection()) {
-            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe VALUES (NULL,?,?,?)");
-            preparedstatement.setInt(1, recipe.getUser_id());
-            preparedstatement.setString(2, recipe.getName());
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe (id,name,user_id,recipe_descrip)VALUES (NULL,?,?,?)");
+            
+            preparedstatement.setString(1, recipe.getName());
+            preparedstatement.setInt(2, recipe.getUser_id());
             preparedstatement.setString(3, recipe.getRecipe_descrip());
             preparedstatement.executeUpdate();
             return 1;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: RecipeSave" + e.getMessage());
             return 0;
         }
     }
 
     public int saveIng(Recipe recipe) {
         try ( Connection connection = ConnectionFactory.getConnection()) {
-            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients VALUES (NULL,?)");
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients VALUES (?,?)");
+            preparedstatement.setInt(1, recipe.getIngredient().get(0).getId());
             preparedstatement.setString(1, recipe.getIngredient().get(0).getName());
             preparedstatement.executeUpdate();
             return 1;
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: SaveIng" + e.getMessage());
             return 0;
         }
 
@@ -49,16 +51,16 @@ public class SaveRecipeBean {
     
     public int saveIngRec(Recipe recipe) {
         try ( Connection connection = ConnectionFactory.getConnection()) {
-            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients VALUES (?,?,?,?)");
+            PreparedStatement preparedstatement = connection.prepareStatement("INSERT INTO recipe_ingredients (recipe_id,ingredients_id,unit,amount)VALUES (?,?,?,?)");
             preparedstatement.setInt(1, recipe.getId());
             preparedstatement.setInt(2, recipe.getIngredient().get(0).getId());
             preparedstatement.setString(3, recipe.getIngredient().get(0).getUnit());
-            preparedstatement.setString(4, recipe.getIngredient().get(0).getUnit());
+            preparedstatement.setInt(4, recipe.getIngredient().get(0).getAmount());
             preparedstatement.executeUpdate();
             return 1;
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: SaveIngRec" + e.getMessage());
             return 0;
         }
 
@@ -73,7 +75,7 @@ public class SaveRecipeBean {
             preparedstatement.executeUpdate();
             return 1;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: SaveTags" + e.getMessage());
             return 0;
         }
     }
@@ -85,7 +87,7 @@ public class SaveRecipeBean {
             preparedstatement.executeUpdate();
             return 1;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: SaveTagsRec" + e.getMessage());
             return 0;
         }
     }
@@ -100,7 +102,7 @@ public class SaveRecipeBean {
             return 1;
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: saveInstructions" + e.getMessage());
             return 0;
         }
 

@@ -22,6 +22,7 @@ import nu.te4.slutprojektbackend.beans.SaveRecipeBean;
 import nu.te4.slutprojektbackend.beans.TagBean;
 import nu.te4.slutprojektbackend.entities.Ingredient;
 import nu.te4.slutprojektbackend.entities.Instruction;
+import nu.te4.slutprojektbackend.entities.RTest;
 import nu.te4.slutprojektbackend.entities.Recipe;
 import nu.te4.slutprojektbackend.entities.Tag;
 
@@ -33,7 +34,6 @@ import nu.te4.slutprojektbackend.entities.Tag;
 
 public class recipeResources {
 
-    
     @EJB
     IngredientsBean ing;
     @EJB
@@ -47,27 +47,35 @@ public class recipeResources {
 
     @POST
     @Path("create")
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createData(Recipe recipe) {
-        //int result = saveRecipeBean.saveRecipe(recipe);
-        //int result1 =saveRecipeBean.saveIngRec(recipe);
-        //int result2 =saveRecipeBean.saveInstructions(recipe);
-        int result3 =saveRecipeBean.saveTags(recipe);
+        int result = saveRecipeBean.saveRecipe(recipe);
+        int result1 =saveRecipeBean.saveIngRec(recipe);
+        //int result =saveRecipeBean.saveInstructions(recipe);
         //int result4 =saveRecipeBean.saveIng(recipe);
         //int result5 =saveRecipeBean.saveTagsRec(recipe);
-
-        if (result3 == 1) {
+        System.out.println(recipe);
+        if (result2 == 2) {
             return Response.status(Response.Status.CREATED).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-          
+        
+
+    }
+
+    @POST
+    @Path("test")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response testData(RTest recipe) {
+        System.out.println(recipe);
+
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @GET
     @Path("allRecipes")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getData() {
         List<Recipe> data = recipeBeans.getAllRecipes();
         return Response.ok(data).build();
@@ -75,6 +83,7 @@ public class recipeResources {
 
     @GET
     @Path("wholeRecipe")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRecipe(@QueryParam("id") int id) {
 
         Recipe data = recipeBeans.getRecipe(id);
@@ -85,11 +94,10 @@ public class recipeResources {
         data.setInstructions(instruct);
         data.setIngredient(ingredient);
         String name = data.getName();
-        data.setTags(tag);   
+        data.setTags(tag);
         data.setId(id);
         data.setName(name);
         //data.setUser_id(userId);
-        
 
         return Response.ok(data).build();
     }

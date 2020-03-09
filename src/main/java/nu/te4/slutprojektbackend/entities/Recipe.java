@@ -17,7 +17,6 @@ public class Recipe {
     private String name;
     private String recipe_descrip;
     private int user_id;
-    private String username;
     private List<Tag> tags = new  ArrayList<>();
     private List<Instruction> instructions = new ArrayList<>();
     private List<Ingredient> ingredient = new ArrayList<>();
@@ -53,7 +52,7 @@ public class Recipe {
         this.name = title;
         this.recipe_descrip = description;
         this.name = name;
-        this.username = username;
+        
     }
 
     public int getId() {
@@ -116,13 +115,11 @@ public class Recipe {
         this.instructions = instructions;
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public String toString() {
+        return "Recipe{" + "id=" + id + ", name=" + name + ", recipe_descrip=" + recipe_descrip + ", user_id=" + user_id + ", tags=" + tags + ", instructions=" + instructions + ", ingredient=" + ingredient + '}';
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
 
     

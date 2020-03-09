@@ -18,6 +18,9 @@ public class Instruction {
     private int id;
     private int recipe_id;
     private int stepNumber;
+
+    public Instruction() {
+    }
     
     public Instruction(String description, int id, int recipe_id, int stepNumber) {
         this.description = description;
