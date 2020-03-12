@@ -47,16 +47,17 @@ public class recipeResources {
 
     @POST
     @Path("create")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createData(Recipe recipe) {
-        int result = saveRecipeBean.saveRecipe(recipe);
         
+        int result = saveRecipeBean.saveRecipe(recipe);
+        recipe.setId(result);
+        int result2 =saveRecipeBean.saveInstructions(recipe);
+        int result5 =saveRecipeBean.saveTagsRec(recipe);
         int result1 =saveRecipeBean.saveIngRec(recipe);
-        //int result =saveRecipeBean.saveInstructions(recipe);
-        //int result4 =saveRecipeBean.saveIng(recipe);
-        //int result5 =saveRecipeBean.saveTagsRec(recipe);
-        System.out.println(recipe);
-        if (result == 2) {
+        
+        if (result > 1 ) {
             return Response.status(Response.Status.CREATED).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();

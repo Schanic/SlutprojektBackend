@@ -44,6 +44,15 @@ public class TagBean {
         }
         return tags;
     }
+    /*public List<Tag> getAllTags(){
+        List<Tag> tags = new ArrayList<>();
+        try (Connection connection = ConnectionFactory.getConnection()){
+            PreparedStatement prepstat = connection.prepareStatement("SELECT * FROM tags");
+            prepstat.execute();
+            ResultSet data = prepstat.executeQuery();
+        } catch (Exception e) {
+        }
+    }*/
   
     
 }
