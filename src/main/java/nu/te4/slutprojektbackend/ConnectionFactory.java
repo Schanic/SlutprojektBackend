@@ -27,9 +27,13 @@ public class ConnectionFactory {
             // Skap properties
             Properties properties = new Properties();
             properties.load(is);
-            String sting = is.toString();
+            
+            String username = properties.getProperty("username");
+            String password = properties.getProperty("password");
+            String url = properties.getProperty("url");
+
         Class.forName("com.mysql.jdbc.Driver");
-        return (Connection) DriverManager.getConnection(sting);
+        return (Connection) DriverManager.getConnection(username, password,url);
                 
     }
 }
