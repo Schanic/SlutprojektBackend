@@ -49,7 +49,7 @@ public class userResources {
     *return Successful registeration, else denied registeration build.
     */
     @POST 
-    @Path("Create")
+    @Path("")
     public Response createUser(@HeaderParam("Authorization") String auth){
         try {
             Credentials cre = creBean.createCredentials(auth);

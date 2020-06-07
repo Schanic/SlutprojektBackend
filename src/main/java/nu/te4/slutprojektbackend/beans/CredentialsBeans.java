@@ -23,6 +23,7 @@ public class CredentialsBeans {
     public Credentials createCredentials(String basic){
         basic = basic.substring(6).trim();
         byte[] Byte = Base64.getDecoder().decode(basic);
+        basic = new String(Byte);
         int colonPos = basic.indexOf(":");
         String username = basic.substring(0,colonPos);
         String password = basic.substring(colonPos + 1);

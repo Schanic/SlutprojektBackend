@@ -22,7 +22,6 @@ import nu.te4.slutprojektbackend.beans.SaveRecipeBean;
 import nu.te4.slutprojektbackend.beans.TagBean;
 import nu.te4.slutprojektbackend.entities.Ingredient;
 import nu.te4.slutprojektbackend.entities.Instruction;
-import nu.te4.slutprojektbackend.entities.RTest;
 import nu.te4.slutprojektbackend.entities.Recipe;
 import nu.te4.slutprojektbackend.entities.Tag;
 
@@ -46,7 +45,7 @@ public class recipeResources {
     InstructionsBean instructBean;
 
     @POST
-    @Path("create")
+    @Path("")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createData(Recipe recipe) {
@@ -64,17 +63,10 @@ public class recipeResources {
         }
     }
 
-    @POST
-    @Path("test")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response testData(RTest recipe) {
-        System.out.println(recipe);
-
-        return Response.status(Response.Status.CREATED).build();
-    }
+   
 
     @GET
-    @Path("allRecipes")
+    @Path("")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getData() {
         List<Recipe> data = recipeBeans.getAllRecipes();

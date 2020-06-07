@@ -10,10 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import nu.te4.slutprojektbackend.ConnectionFactory;
-import nu.te4.slutprojektbackend.entities.Rec_tags;
 import nu.te4.slutprojektbackend.entities.Tag;
 
 /**

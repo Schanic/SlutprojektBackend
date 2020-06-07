@@ -13,7 +13,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import nu.te4.slutprojektbackend.ConnectionFactory;
 import nu.te4.slutprojektbackend.entities.Ingredient;
-//import nu.te4.slutprojektbackend.entities.Rec_Ing;
 
 
 /**

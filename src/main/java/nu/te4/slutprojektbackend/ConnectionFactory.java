@@ -6,20 +6,30 @@
 package nu.te4.slutprojektbackend;
 
 import com.mysql.jdbc.Connection;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import javax.ejb.EJB;
+import nu.te4.slutprojektbackend.beans.PropertiesBean;
 
 /**
  *
  * @author fredr
  */
 public class ConnectionFactory {
-    public static Connection getConnection() throws SQLException, ClassNotFoundException{
-        String user ="root";
-        String password="";
-        String url ="jdbc:mysql://localhost/datalagring";
+    @EJB 
+    PropertiesBean propbean;
+    public static Connection getConnection() throws SQLException, ClassNotFoundException, IOException{
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            InputStream is = classLoader.getResourceAsStream("newproperties.properties");
+            // Skap properties
+            Properties properties = new Properties();
+            properties.load(is);
+            String sting = is.toString();
         Class.forName("com.mysql.jdbc.Driver");
-        return (Connection) DriverManager.getConnection(url,user,password);
+        return (Connection) DriverManager.getConnection(sting);
                 
     }
 }

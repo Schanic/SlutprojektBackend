@@ -42,7 +42,6 @@ public class Recipe {
     public Recipe(int id, String title, String author) {
         this.id = id;
         this.name = title;
-        
         this.user_id = user_id;
     }
 
